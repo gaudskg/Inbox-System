@@ -2,8 +2,12 @@
 
 {% block  title%}INBOX{% endblock  %}
 
+{% block nav-content %}
+    <a href="{% url 'logout' %}" class="btn btn-danger btn-sm" id="btn-nav"> Logout </a>
+{% endblock nav-content %}
+
 {% block  content %}
-<h1>
-    THIS IS INBOX PAGE
+<h1 class="text-success text-center mt-5">
+    THIS IS INBOX PAGE (BACKEND)
 </h1>
 {% endblock  %}

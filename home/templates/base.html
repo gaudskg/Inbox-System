@@ -1,52 +1,91 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- ADDING BOOTSTRAP CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-   <!-- FONTAWESOME CDN -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-   <!-- BOXICON CDN -->
-   <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- FONTAWESOME CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- BOXICON CDN -->
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
     <!-- FAVICON -->
     <link rel="shortcut icon" href="{% static '/img/favicon.ico' %}" type="image/x-icon">
     <!-- LOGO -->
     <link rel="shortcut icon" href="{% static 'img/logo.ico' %}" type="image/x-icon">
     <!-- STATIC CSS -->
-    <link rel="stylesheet" href= "{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-     <!-- BLOCK TITLE ROOT -->
-     <title>{% block title %} {% endblock title %}</title>
+    <!-- BLOCK TITLE ROOT -->
+    <title>{% block title %} {% endblock title %}</title>
 
 
 </head>
 
 <body>
     <div class="wrapper">
+        {% block image %}
+        <style>
+            body {
+                background-image: url(/static/img/backgroud_home.jpg);
+                background-position: center 0px;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-size: cover;
+            }
+        </style>
+        {% endblock image %}
+        
         <!-- NAVBAR -->
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="col-sm">
                     <a href="" class="navbar-brand flex-grow-i" style="color: #fff; margin-left: 25px;">
-                        <i class="bx bxs-send bx-rotate-270 align-middle" style="color: #8abaae; font-size: 25px;"></i>&nbsp; <span class="align-middle">INBOX SYSTEM</span>
+                        {% block nav-content %}
+                        <i class="bx bxs-send bx-rotate-270 align-middle" style="color: #8abaae; font-size: 25px;"></i>&nbsp; <span class="align-middle">INBOX
+                            SYSTEM</span>
+                        {% endblock nav-content %}
                     </a>
                 </div>
-                
-                <!-- BUTTONS -->
+
+                <!-- Hamburger -->
                 <div class="col-sm">
-                    {% block nav-content %}
-                    <a href="{% url 'inbox' %}" class="btn btn-success btn-sm" id="btn-nav"> Login </a>
-                    {% endblock nav-content %}
+                    <a class="navbar-brand flex-grow-1" id="btn-nav" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                        <i class="fa fa-bars"></i>
+                    </a>
                 </div>
             </nav>
         </header>
 
-    <!-- BLOCK CONTENT ROOT-->
-    {% block content %} {% endblock content %}
-    </div>  <!-- end wrapper  -->
+        <!-- BLOCK CONTENT ROOT-->
+        {% block content %} {% endblock content %}
+    </div> <!-- end wrapper  -->
+
+    <!-- Sidebar (bootstrap offcanvas) -->
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Menu</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="d-grid gap-2">
+                {% block sidebar-content %}
+                <a href="{% url 'inbox' %}" class="btn btn-secondary">Login</a>
+                {% endblock sidebar-content %}
+                <hr><br>
+                <center class="mt-5">
+                    <i class="bx bxs-send bx-rotate-270" style="color: #8abaae; font-size: 150px;"></i>
+                </center>
+            </div>
+        </div>
+    </div>
 
     <!-- FOOTER -->
     <footer class="bg-dark text-center text-lg-start" id="footer" style="color: #fff;">
@@ -62,26 +101,48 @@
     {% if form.errors %}
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
-        swal("Access Denied..!!!", "Enter the correct credentials.","info")
+        swal("Access Denied..!!!", "Enter the correct credentials.", "info")
     </script>
 
     {% endif %}
 
     <!-- BOOTSTRAP CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
     <!-- JQERY -->
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 
     <!-- INPUTMASK -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js" integrity="sha512-jTgBq4+dMYh73dquskmUFEgMY5mptcbqSw2rmhOZZSJjZbD2wMt0H5nhqWtleVkyBEjmzid5nyERPSNBafG4GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js"
+        integrity="sha512-jTgBq4+dMYh73dquskmUFEgMY5mptcbqSw2rmhOZZSJjZbD2wMt0H5nhqWtleVkyBEjmzid5nyERPSNBafG4GQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <!-- TYPED JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.0/typed.min.js" integrity="sha512-zKaK6G2LZC5YZTX0vKmD7xOwd1zrEEMal4zlTf5Ved/A1RrnW+qt8pWDfo7oz+xeChECS/P9dv6EDwwPwelFfQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.0/typed.min.js"
+        integrity="sha512-zKaK6G2LZC5YZTX0vKmD7xOwd1zrEEMal4zlTf5Ved/A1RrnW+qt8pWDfo7oz+xeChECS/P9dv6EDwwPwelFfQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- SWEET ALERT -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- STATIC JS -->
     <script src="{% static 'js/script.js' %}"></script>
+    <!-- Typed effect control -->
+    <script>
+        var typed = new Typed('#element', {
+            strings: [
+                'are an oil company',
+                'extract oil and gas',
+                'have the best deals',
+                'offer free quote'
+            ],
+            typeSpeed: 50,
+            backSpeed: 30,
+            loop: true
+        })
+    </script>
 </body>
+
 </html>

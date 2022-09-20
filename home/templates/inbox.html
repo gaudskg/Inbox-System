@@ -1,11 +1,22 @@
 {% extends 'base.html' %}
 
+<!-- Title bar browser -->
 {% block  title%}INBOX{% endblock  %}
 
+<!-- Block images denied here -->
+{% block image %} {% endblock image %}
+<!-- Block navbar content -->
 {% block nav-content %}
-    <a href="{% url 'logout' %}" class="btn btn-danger btn-sm" id="btn-nav"> Logout </a>
+<i class="fa fa-envelope" style="color: #8abaae; font-size: 25px;"></i>&nbsp; &nbsp; INBOX 
 {% endblock nav-content %}
 
+<!-- Logout option side bar -->
+{% block sidebar-content %}
+<a href="{% url 'home' %}" class="btn btn-outline-danger">Logout</a>
+<a href="#" class="btn btn-outline-success">Admin</a>
+{% endblock sidebar-content %}
+
+<!-- Page Content -->
 {% block  content %}
 <h1 class="text-success text-center mt-5">
     THIS IS INBOX PAGE (BACKEND)

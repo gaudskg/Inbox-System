@@ -26,7 +26,21 @@ NAVBAR CONFIGURATION
 -------------------------*/
 
 #btn-nav{
-    width: 90px;
     float: right;
     margin-right: 25px;
+    cursor: pointer;
+}
+
+/*-------------------------
+TYPED JS EFFECT
+-------------------------*/
+
+.block-position {
+    width: 80%;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
 }
